@@ -11,13 +11,10 @@ const state = {
 let quickSelectEl, quickPriceEl, quickStockEl, quickQtyEl, quickSubtotalEl, quickAddBtnEl;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Theme init
   initThemeToggle();
 
-  // Grab quick order elements
   quickSelectEl = document.getElementById('quickProductSelect');
   quickPriceEl = document.getElementById('quickPrice');
   quickStockEl = document.getElementById('quickStock');
@@ -25,19 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
   quickSubtotalEl = document.getElementById('quickSubtotal');
   quickAddBtnEl = document.getElementById('quickAddBtn');
 
-  // Filters
   document.getElementById('categoryFilter').addEventListener('change', renderProducts);
   document.getElementById('searchInput').addEventListener('input', renderProducts);
 
-  // Order form
   document.getElementById('orderForm').addEventListener('submit', submitOrder);
 
-  // Quick order interactions
   quickSelectEl.addEventListener('change', handleQuickProductChange);
   quickQtyEl.addEventListener('input', handleQuickQtyChange);
   quickAddBtnEl.addEventListener('click', handleQuickAdd);
 
-  // Fetch products from backend (or demo fallback)
   fetchProducts();
 });
 
@@ -110,7 +103,7 @@ function loadDemoProducts() {
     },
     {
       id: 'demo2',
-      name: '12" Glass Water Pipe',
+      name: '12\" Glass Water Pipe',
       category: 'Glass',
       price: 39.99,
       description: 'Clear glass water pipe with ice catcher.',
@@ -308,8 +301,10 @@ function handleQuickAdd() {
   if (qty < 1) qty = 1;
   if (qty > maxQty) qty = maxQty;
 
-  // Add to cart
   addToCart(product, qty);
+
+  // Keep subtotal in sync
+  updateQuickSubtotal();
 }
 
 /* ==============
@@ -448,7 +443,7 @@ async function submitOrder(e) {
 
   const customer = document.getElementById('customerName').value.trim();
   const phone = document.getElementById('customerPhone').value.trim();
-  const pickupWindow = document.getElementById('pickupWindow').value.trim();
+  const pickupWindow = document.getElementById('pickupWindow').value.trim(); // datetime-local string
 
   if (!customer || !phone || !pickupWindow) {
     msgEl.textContent = 'Please fill in all pickup details.';
@@ -471,9 +466,9 @@ async function submitOrder(e) {
     total
   };
 
-  // If no backend yet, just fake success so you can see flow:
+  // If no backend yet, just simulate success so you can test the flow.
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('YOUR_WEB_APP_URL_HERE')) {
-    msgEl.textContent = 'Demo mode: order not sent, but UI works.';
+    msgEl.textContent = 'Demo mode: order not sent, but the calculator and form are working.';
     msgEl.classList.add('success');
     return;
   }
