@@ -11,33 +11,51 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Top nav + logo -->
   <header class="site-header">
-    <div class="header-inner">
-      <div class="brand">
-        <div class="brand-mark">◆</div>
-        <div class="brand-text">
-          <div class="brand-title">Diamond Avenue Smoke Shop</div>
-          <div class="brand-subtitle">Local Pickup • 21+ Only</div>
+    <div class="top-bar">
+      <div class="logo-block">
+        <div class="logo-mark">◆</div>
+        <div class="logo-text">
+          <div class="logo-title">Diamond Avenue Smoke Shop</div>
+          <div class="logo-subtitle">Glass • Vapes • Papers • More</div>
         </div>
       </div>
 
-      <div class="header-right">
-        <div class="age-badge">
-          21+ • VALID ID REQUIRED
+      <nav class="main-nav">
+        <a href="#collections">Featured</a>
+        <a href="#collections">Glass</a>
+        <a href="#collections">Vapes</a>
+        <a href="#collections">Accessories</a>
+        <a href="#collections">Papers</a>
+        <a href="#collections">Batteries</a>
+        <a href="#collections" class="nav-sale">Sale</a>
+        <span class="nav-age">21+ Only</span>
+      </nav>
+    </div>
+
+    <!-- Hero banner like the example -->
+    <div class="hero-banner">
+      <div class="hero-inner">
+        <div class="hero-pill hero-pill-left">LOCAL PICKUP ONLY</div>
+        <div class="hero-main">
+          <p class="hero-tagline">Grand Opening Special</p>
+          <h1>20% OFF <span>SELECT GLASS</span></h1>
+          <p class="hero-sub">
+            Show this screen at the counter • Limited time • 21+ with valid ID
+          </p>
         </div>
-        <button id="themeToggle" class="theme-toggle" type="button">
-          Night Mode
-        </button>
+        <div class="hero-pill hero-pill-right">USE CODE: <strong>DIAMOND20</strong></div>
       </div>
     </div>
   </header>
 
   <main class="page">
-    <!-- LEFT: Products -->
-    <section class="products-panel">
-      <div class="panel-header">
-        <h1>Shop Menu</h1>
-        <div class="filters">
+    <!-- LEFT: Collections / products -->
+    <section class="collections-panel" id="collections">
+      <header class="collections-header">
+        <h2>Shop by Collection</h2>
+        <div class="collections-filters">
           <label class="filter">
             Category
             <select id="categoryFilter">
@@ -49,20 +67,22 @@
             <input type="text" id="searchInput" placeholder="Search products..." />
           </label>
         </div>
-      </div>
+      </header>
 
+      <!-- Product grid (acts like "shop by collection" tiles) -->
       <div id="productsGrid" class="products-grid">
-        <!-- Product cards populated by JS -->
+        <!-- Populated by script.js -->
       </div>
       <p id="productsEmpty" class="empty-message" hidden>
-        No products match your filters.
+        No products match your filters. Try a different category or search.
       </p>
     </section>
 
-    <!-- RIGHT: Order sidebar -->
+    <!-- RIGHT: Order sidebar (quick order + cart + pickup form) -->
     <aside class="order-sidebar">
-      <section class="quick-order">
-        <h2>Quick Order</h2>
+      <!-- Quick Order widget -->
+      <section class="order-card quick-order">
+        <h3>Quick Order</h3>
 
         <label class="field">
           Product
@@ -71,7 +91,7 @@
           </select>
         </label>
 
-        <div class="quick-order-row">
+        <div class="quick-row">
           <div class="quick-meta">
             <div class="quick-price" id="quickPrice">$0.00</div>
             <div class="quick-stock" id="quickStock">Select a product</div>
@@ -94,8 +114,9 @@
         </button>
       </section>
 
-      <section class="cart-section">
-        <h2>Your Order</h2>
+      <!-- Cart -->
+      <section class="order-card cart-section">
+        <h3>Your Order</h3>
         <div id="cartItems" class="cart-items">
           <!-- Cart rows populated by JS -->
         </div>
@@ -108,7 +129,8 @@
         </div>
       </section>
 
-      <section class="checkout-section">
+      <!-- Pickup form -->
+      <section class="order-card checkout-section">
         <h3>Pickup Details</h3>
         <form id="orderForm" class="order-form">
           <label class="field">
@@ -121,11 +143,10 @@
           </label>
           <label class="field">
             Pickup Date &amp; Time
-            <!-- calendar + time picker -->
             <input type="datetime-local" id="pickupWindow" required />
           </label>
           <p class="small-note">
-            Payment is due at pickup. Prices do not include tax. All customers must be 21+ with valid ID.
+            Payment due at pickup. Prices shown before tax. All customers must be 21+ with valid ID.
           </p>
           <button class="btn-primary" type="submit">
             Place Pickup Order
@@ -139,7 +160,7 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <span>© <span id="year"></span> Diamond Avenue Smoke Shop</span>
-      <span>Online menu &amp; pickup requests • No shipping • Local pickup only</span>
+      <span>Menu &amp; pickup requests only • No shipping • Local pickup at store</span>
     </div>
   </footer>
 
