@@ -4,104 +4,141 @@
   <meta charset="UTF-8" />
   <title>Diamond Avenue Smoke Shop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Diamond Avenue Smoke Shop - Browse our menu and place pickup orders online. Local pickup only. 21+ with valid ID.">
+  <meta
+    name="description"
+    content="Diamond Avenue Smoke Shop - Browse our menu and place pickup orders online. Local pickup only, 21+ with valid ID."
+  />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Top bar / brand -->
-  <header class="header">
+  <header class="site-header">
     <div class="header-inner">
-      <div class="logo">
-        <span class="logo-icon">◆</span>
-        <div class="logo-text">
-          <span class="logo-title">Diamond Avenue Smoke Shop</span>
-          <span class="logo-subtitle">Local Pickup • 21+ Only</span>
+      <div class="brand">
+        <div class="brand-mark">◆</div>
+        <div class="brand-text">
+          <div class="brand-title">Diamond Avenue Smoke Shop</div>
+          <div class="brand-subtitle">Local Pickup • 21+ Only</div>
         </div>
       </div>
-      <div class="age-warning">
-        21+ ONLY • VALID GOVERNMENT ID REQUIRED AT PICKUP
+
+      <div class="header-right">
+        <div class="age-badge">
+          21+ • VALID ID REQUIRED AT PICKUP
+        </div>
+        <button id="themeToggle" class="theme-toggle" type="button">
+          Night Mode
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- Main layout -->
-  <main class="layout">
-    <!-- Products / Menu -->
-    <section class="store">
-      <div class="store-header">
-        <h1>Menu</h1>
+  <main class="page">
+    <!-- LEFT: Products -->
+    <section class="products-panel">
+      <div class="panel-header">
+        <h1>Shop Menu</h1>
         <div class="filters">
-          <label class="filter-control">
-            Category:
+          <label class="filter">
+            Category
             <select id="categoryFilter">
               <option value="">All</option>
             </select>
           </label>
-          <label class="filter-control">
-            Search:
-            <input type="text" id="searchInput" placeholder="Search products..." />
+          <label class="filter">
+            Search
+            <input type="text" id="searchInput" placeholder="Search by name or type..." />
           </label>
         </div>
       </div>
 
       <div id="productsGrid" class="products-grid">
-        <!-- Populated by JS -->
+        <!-- Product cards populated by JS -->
       </div>
-
-      <div id="productsEmpty" class="products-empty" hidden>
-        No products found. Please clear your filters or check back later.
-      </div>
+      <p id="productsEmpty" class="empty-message" hidden>
+        No products match your filters.
+      </p>
     </section>
 
-    <!-- Cart / Pickup order panel -->
-    <aside class="cart-panel">
-      <h2>Pickup Order</h2>
+    <!-- RIGHT: Order sidebar -->
+    <aside class="order-sidebar">
+      <section class="quick-order">
+        <h2>Quick Order</h2>
 
-      <div id="cartItems" class="cart-items">
-        <!-- Populated by JS -->
-      </div>
+        <label class="field">
+          Product
+          <select id="quickProductSelect">
+            <!-- options populated by JS -->
+          </select>
+        </label>
 
-      <div class="cart-summary">
-        <div class="cart-row total-row">
-          <span>Total:</span>
-          <span>$<span id="cartTotal">0.00</span></span>
+        <div class="quick-order-row">
+          <div class="quick-meta">
+            <div class="quick-price" id="quickPrice">$0.00</div>
+            <div class="quick-stock" id="quickStock">Select a product</div>
+          </div>
+          <div class="quick-qty">
+            <label>
+              Qty
+              <input type="number" id="quickQty" min="1" value="1" />
+            </label>
+          </div>
         </div>
-      </div>
 
-      <form id="orderForm" class="order-form">
-        <h3>Your Info</h3>
-        <label>
-          Full Name
-          <input type="text" id="customerName" autocomplete="name" required />
-        </label>
+        <div class="quick-subtotal-row">
+          <span>Line total</span>
+          <span id="quickSubtotal">$0.00</span>
+        </div>
 
-        <label>
-          Phone Number
-          <input type="tel" id="customerPhone" autocomplete="tel" required />
-        </label>
-
-        <label>
-          Pickup Time
-          <input type="text" id="pickupWindow" placeholder="Today 5–6 PM" required />
-        </label>
-
-        <p class="order-note">
-          Payment is due at pickup. Prices do not include tax. Availability subject to ID verification (21+).
-        </p>
-
-        <button type="submit" class="btn-primary">
-          Place Pickup Order
+        <button id="quickAddBtn" class="btn-primary" type="button">
+          Add to Order
         </button>
+      </section>
 
-        <p id="orderMessage" class="order-message"></p>
-      </form>
+      <section class="cart-section">
+        <h2>Your Order</h2>
+        <div id="cartItems" class="cart-items">
+          <!-- Cart rows populated by JS -->
+        </div>
+
+        <div class="cart-footer">
+          <div class="cart-total-row">
+            <span>Total:</span>
+            <span>$<span id="cartTotal">0.00</span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="checkout-section">
+        <h3>Pickup Details</h3>
+        <form id="orderForm" class="order-form">
+          <label class="field">
+            Full Name
+            <input type="text" id="customerName" required autocomplete="name" />
+          </label>
+          <label class="field">
+            Phone Number
+            <input type="tel" id="customerPhone" required autocomplete="tel" />
+          </label>
+          <label class="field">
+            Pickup Time
+            <input type="text" id="pickupWindow" placeholder="Today 5–6 PM" required />
+          </label>
+          <p class="small-note">
+            Payment is due at pickup. Prices do not include tax. All customers must be 21+ with valid identification.
+          </p>
+          <button class="btn-primary" type="submit">
+            Place Pickup Order
+          </button>
+          <p id="orderMessage" class="order-message"></p>
+        </form>
+      </section>
     </aside>
   </main>
 
-  <footer class="footer">
+  <footer class="site-footer">
     <div class="footer-inner">
       <span>© <span id="year"></span> Diamond Avenue Smoke Shop</span>
-      <span class="footer-note">Online menu &amp; pickup orders • No shipping • Local pickup only</span>
+      <span>Online menu &amp; pickup requests • No shipping • Local pickup only</span>
     </div>
   </footer>
 
