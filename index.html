@@ -23,7 +23,7 @@
 
       <div class="header-right">
         <div class="age-badge">
-          21+ • VALID ID REQUIRED AT PICKUP
+          21+ • VALID ID REQUIRED
         </div>
         <button id="themeToggle" class="theme-toggle" type="button">
           Night Mode
@@ -46,7 +46,7 @@
           </label>
           <label class="filter">
             Search
-            <input type="text" id="searchInput" placeholder="Search by name or type..." />
+            <input type="text" id="searchInput" placeholder="Search products..." />
           </label>
         </div>
       </div>
@@ -120,11 +120,12 @@
             <input type="tel" id="customerPhone" required autocomplete="tel" />
           </label>
           <label class="field">
-            Pickup Time
-            <input type="text" id="pickupWindow" placeholder="Today 5–6 PM" required />
+            Pickup Date &amp; Time
+            <!-- calendar + time picker -->
+            <input type="datetime-local" id="pickupWindow" required />
           </label>
           <p class="small-note">
-            Payment is due at pickup. Prices do not include tax. All customers must be 21+ with valid identification.
+            Payment is due at pickup. Prices do not include tax. All customers must be 21+ with valid ID.
           </p>
           <button class="btn-primary" type="submit">
             Place Pickup Order
