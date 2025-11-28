@@ -13,8 +13,6 @@ let quickSelectEl, quickPriceEl, quickStockEl, quickQtyEl, quickSubtotalEl, quic
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  initThemeToggle();
-
   quickSelectEl = document.getElementById('quickProductSelect');
   quickPriceEl = document.getElementById('quickPrice');
   quickStockEl = document.getElementById('quickStock');
@@ -34,33 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchProducts();
 });
 
-/* ==============
-   Theme toggle
-   ============== */
-
-function initThemeToggle() {
-  const toggleBtn = document.getElementById('themeToggle');
-  const saved = localStorage.getItem('das_theme');
-
-  if (saved === 'light') {
-    document.body.classList.add('theme-light');
-    toggleBtn.textContent = 'Day Mode';
-  } else {
-    document.body.classList.remove('theme-light');
-    toggleBtn.textContent = 'Night Mode';
-  }
-
-  toggleBtn.addEventListener('click', () => {
-    document.body.classList.toggle('theme-light');
-    const isLight = document.body.classList.contains('theme-light');
-    toggleBtn.textContent = isLight ? 'Day Mode' : 'Night Mode';
-    localStorage.setItem('das_theme', isLight ? 'light' : 'dark');
-  });
-}
-
-/* ==============
+/* ========================
    Data / products
-   ============== */
+   ======================== */
 
 async function fetchProducts() {
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('YOUR_WEB_APP_URL_HERE')) {
@@ -103,7 +77,7 @@ function loadDemoProducts() {
     },
     {
       id: 'demo2',
-      name: '12\" Glass Water Pipe',
+      name: '12" Glass Water Pipe',
       category: 'Glass',
       price: 39.99,
       description: 'Clear glass water pipe with ice catcher.',
@@ -177,21 +151,23 @@ function renderProducts() {
 
     card.innerHTML = `
       <img src="${p.image || ''}" alt="${escapeHtml(p.name || '')}" class="product-image" />
-      <h3>${escapeHtml(p.name || '')}</h3>
-      <div class="product-meta">
-        <span class="price">$${price.toFixed(2)}</span>
-        <span class="qty">${isOut ? 'Out of stock' : 'In stock: ' + qty}</span>
+      <div class="product-info">
+        <h3>${escapeHtml(p.name || '')}</h3>
+        <div class="product-meta">
+          <span class="price">$${price.toFixed(2)}</span>
+          <span class="qty">${isOut ? 'Out of stock' : 'In stock: ' + qty}</span>
+        </div>
+        <p class="desc">${escapeHtml(p.description || '')}</p>
       </div>
-      <p class="desc">${escapeHtml(p.description || '')}</p>
     `;
 
     grid.appendChild(card);
   });
 }
 
-/* ==============
+/* ========================
    Quick Order widget
-   ============== */
+   ======================== */
 
 function populateQuickOrderSelect() {
   quickSelectEl.innerHTML = '';
@@ -302,14 +278,12 @@ function handleQuickAdd() {
   if (qty > maxQty) qty = maxQty;
 
   addToCart(product, qty);
-
-  // Keep subtotal in sync
-  updateQuickSubtotal();
+  updateQuickSubtotal(); // keep line total in sync
 }
 
-/* ==============
+/* ========================
    Cart
-   ============== */
+   ======================== */
 
 function addToCart(product, qtyToAdd) {
   const maxQty = Number(product.quantity) || 0;
@@ -424,9 +398,9 @@ function removeCartItem(id) {
   renderCart();
 }
 
-/* ==============
+/* ========================
    Submit order
-   ============== */
+   ======================== */
 
 async function submitOrder(e) {
   e.preventDefault();
@@ -466,9 +440,9 @@ async function submitOrder(e) {
     total
   };
 
-  // If no backend yet, just simulate success so you can test the flow.
+  // If you haven't wired the backend yet, simulate success
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('YOUR_WEB_APP_URL_HERE')) {
-    msgEl.textContent = 'Demo mode: order not sent, but the calculator and form are working.';
+    msgEl.textContent = 'Demo mode: calculator and form are working, but order was not sent.';
     msgEl.classList.add('success');
     return;
   }
@@ -483,7 +457,7 @@ async function submitOrder(e) {
     const data = await res.json();
 
     if (data && data.success) {
-      msgEl.textContent = `Order placed! Your order ID is ${data.orderId}. Please bring a valid ID at pickup.`;
+      msgEl.textContent = `Order placed! Your order ID is ${data.orderId}. Please bring valid ID at pickup.`;
       msgEl.classList.add('success');
       state.cart = [];
       renderCart();
@@ -499,9 +473,9 @@ async function submitOrder(e) {
   }
 }
 
-/* ==============
+/* ========================
    Helpers
-   ============== */
+   ======================== */
 
 function escapeHtml(str) {
   return String(str)
